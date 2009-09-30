@@ -54,8 +54,6 @@ public class TextRunner
 	 * @param runConfiguration A configuration to provide to the test runner.
 	 * @return The newly created test runner.
 	 * 
-	 * @see astre.runner.RunRequest#create()
-	 * 
 	 */
 	public static function run(tests:Object, listener:ITestListener = null, env:TestEnv = null, runConfiguration:RunConfiguration = null):ITestRunner 
 	{
@@ -69,7 +67,7 @@ public class TextRunner
 			listener.registerToNotifier(runner.progressNotifier);
 		}
 		
-		var request:RunRequest = RunRequest.create(tests);
+		var request:RunRequest = new RunRequest(tests);
 		
 		runner.runWith(request);
 		return runner;

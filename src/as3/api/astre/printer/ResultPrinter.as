@@ -26,7 +26,7 @@ package astre.printer
 	import astre.core.Test;
 	import astre.runner.AbstractTestListener;
 	import astre.runner.ITestRunner;
-	import astre.runner.Result;
+	import astre.runner.TestResult;
 	import astre.runner.RunConfiguration;
 	import flash.utils.getQualifiedClassName;
 
@@ -178,26 +178,26 @@ public class ResultPrinter extends AbstractTestListener
 	{
 		var d:Date = new Date();
 		var numPassed:uint = 
-			runner.results.getResults(Result.PASSED).numResults;
+			runner.testResult.filterResults(TestResult.PASSED).numResults;
 		var numFailures:uint = 
-			runner.results.getResults(Result.FAILURES).numResults;
+			runner.testResult.filterResults(TestResult.FAILURES).numResults;
 		var numErrors:uint = 
-			runner.results.getResults(Result.ERRORS).numResults;
+			runner.testResult.filterResults(TestResult.ERRORS).numResults;
 		var numIgnored:uint = 
-			runner.results.getResults(Result.IGNORED).numResults;
+			runner.testResult.filterResults(TestResult.IGNORED).numResults;
 		var numTests:uint = 
-			runner.results.getResults(Result.ALL).numResults;
+			runner.testResult.filterResults(TestResult.ALL).numResults;
 		
 		print("---- END PROCESSING ----");
 		print("> Ended on "+formatMonthOrDay(d.month)+"/"+
 			formatMonthOrDay(d.day)+"/"+d.fullYear+" "+d.toTimeString());
 		print("> Tests run : "+runner.numTestsRun+"/"+runner.numTests);
-		print("> Result detail :");
+		print("> TestResult detail :");
 		print("\tPassed : "+numPassed);
 		print("\tFailures : "+numFailures);
 		print("\tErrors : "+numErrors);
 		print("\tIgnored : "+numIgnored);
-		print("\tExecution time : "+runner.results.totalRuntime+"ms");
+		print("\tExecution time : "+runner.testResult.totalRuntime+"ms");
 	}
 	
 	/**

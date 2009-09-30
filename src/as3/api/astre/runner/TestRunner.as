@@ -55,7 +55,7 @@ package astre.runner
  * example, this <code class="prettyprint">TestRunner</code> 
  * provides access to the <code class="prettyprint">Stage</code> 
  * to all tests about to be run, using the 
- * <code class="prettyprint">testEnvs</code> property.
+ * <code class="prettyprint">testEnv</code> property.
  * 
  * <pre class="prettyprint">
  * public class TestRunnerExample extends Sprite
@@ -140,14 +140,14 @@ public class TestRunner extends AbstractTestListener implements ITestRunner
 	 * <code class="prettyprint">TestRunner</code> writes 
 	 * the results of the tests
 	 */
-	protected var _results:Result;
+	protected var _testResult:TestResult;
 	
 	/**
 	 * @inheritDoc
 	 */
-	public function get results():Result
+	public function get testResult():TestResult
 	{
-		return _results.clone();
+		return _testResult.clone();
 	}
 	
 	/**
@@ -189,22 +189,22 @@ public class TestRunner extends AbstractTestListener implements ITestRunner
 	 * The resources shared by all tests to be run by this 
 	 * <code class="prettyprint">TestRunner</code>.
 	 */
-	protected var _testEnvs:TestEnv;
+	protected var _testEnv:TestEnv;
 	
 	/**
 	 * @inheritDoc
 	 */
-	public function get testEnvs():TestEnv
+	public function get testEnv():TestEnv
 	{
-		return _testEnvs;
+		return _testEnv;
 	}
 	
 	/**
 	 * @private
 	 */
-	public function set testEnvs(value:TestEnv):void
+	public function set testEnv(value:TestEnv):void
 	{
-		this._testEnvs = _testEnvs;
+		this._testEnv = _testEnv;
 	}
 	
 	/**
@@ -233,26 +233,26 @@ public class TestRunner extends AbstractTestListener implements ITestRunner
 	 * This <code class="prettyprint">TestRunner</code> is 
 	 * registered with a priority of <code class="prettyprint">255</code>.
 	 * 
-	 * @param testEnvs The resources that will be shared by all 
+	 * @param testEnv The resources that will be shared by all 
 	 * tests to be run.
 	 * @param runConfiguration The configuration of this 
 	 * <code class="prettyprint">TestRunner</code>.
 	 */
 	public function TestRunner(
-			testEnvs:TestEnv = null, 
+			testEnv:TestEnv = null, 
 			runConfiguration:RunConfiguration = null
 		) 
 	{
 		super();
 		_progressNotifier = new ProgressNotifier();
 		
-		if (testEnvs != null)
+		if (testEnv != null)
 		{
-			this._testEnvs= testEnvs;
+			this._testEnv= testEnv;
 		}
 		else
 		{
-			this._testEnvs = new TestEnv();
+			this._testEnv = new TestEnv();
 		}
 		
 		if (runConfiguration != null)
@@ -283,7 +283,7 @@ public class TestRunner extends AbstractTestListener implements ITestRunner
 			_isRunning = true;
 			wasStarted = true;
 			_numTests = _tests.length;
-			_results = new Result();
+			_testResult = new TestResult();
 			this._progressNotifier.notifyRunStart(this);
 			askRunNextTest();
 		}
@@ -316,7 +316,7 @@ public class TestRunner extends AbstractTestListener implements ITestRunner
 	 */
 	override public function testEnd(test:Test, result:AtomicResult):void 
 	{
-		_results.addAtomicResult(result);
+		_testResult.addAtomicResult(result);
 		isATestCurrentlyBeingRun = false;
 		askRunNextTest();
 	}

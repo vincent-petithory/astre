@@ -64,7 +64,7 @@ package astre.core
  * 
  * <li>One very useful feature is to have resources that are shared 
  * by all your unit tests. Thoses resources are gathered in the 
- * <code class="prettyprint">testEnvs</code> property, that 
+ * <code class="prettyprint">testEnv</code> property, that 
  * have passed to the test runner. The advantage on defining 
  * shared resources is that they are created only one time. This is 
  * particularly useful when you need to collect data from a database, or 
@@ -197,7 +197,7 @@ public class Test extends Assertion
 	 * // code in your test class
 	 * public function stageNumChildrenTest():void
 	 * {
-	 * 		var stage:Stage = this.testEnvs.stage;
+	 * 		var stage:Stage = this.testEnv.stage;
 	 * 		var numChildren:uint = stage.numChildren;
 	 * 		stage.addChild(new Shape());
 	 * 		assertEquals(numChildren+1, stage.numChildren);
@@ -206,9 +206,9 @@ public class Test extends Assertion
 	 * </pre>
 	 * 
 	 */
-	protected function get testEnvs():TestEnv
+	protected function get testEnv():TestEnv
 	{
-		return this.Astre::runner.testEnvs;
+		return this.Astre::runner.testEnv;
 	}
 	
 	//------------------------------

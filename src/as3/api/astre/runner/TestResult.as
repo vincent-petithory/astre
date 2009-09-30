@@ -27,7 +27,7 @@ package astre.runner
 	import astre.core.Test;
 
 /**
- * A <code class="prettyprint">Result</code> object aggregates 
+ * A <code class="prettyprint">TestResult</code> object aggregates 
  * <code class="prettyprint">AtomicResult</code> objects.
  * It provides filter and sort features as well as convenient 
  * informations on the whole results.
@@ -37,7 +37,7 @@ package astre.runner
  * @author lunar
  * 
  */
-public class Result 
+public class TestResult 
 {
 	
 	//------------------------------
@@ -50,7 +50,7 @@ public class Result
 	 * Specifies to include none of the results for 
 	 * the result filter methods.
 	 * 
-	 * @see #getResults()
+	 * @see #filterResults()
 	 * 
 	 */
 	public static const NOTHING:uint = 0;
@@ -61,7 +61,7 @@ public class Result
 	 * <code class="prettyprint">EResultType.IGNORED</code> for 
 	 * the result filter methods.
 	 * 
-	 * @see #getResults()
+	 * @see #filterResults()
 	 * 
 	 */
 	public static const IGNORED:uint = 1;
@@ -72,7 +72,7 @@ public class Result
 	 * <code class="prettyprint">EResultType.UNEXPECTED_ERROR</code> for 
 	 * the result filter methods.
 	 * 
-	 * @see #getResults()
+	 * @see #filterResults()
 	 * 
 	 */
 	public static const ERRORS:uint = 2;
@@ -83,7 +83,7 @@ public class Result
 	 * <code class="prettyprint">EResultType.FALURE</code> for 
 	 * the result filter methods.
 	 * 
-	 * @see #getResults()
+	 * @see #filterResults()
 	 * 
 	 */
 	public static const FAILURES:uint = 4;
@@ -94,7 +94,7 @@ public class Result
 	 * <code class="prettyprint">EResultType.PASSED</code> for 
 	 * the result filter methods.
 	 * 
-	 * @see #getResults()
+	 * @see #filterResults()
 	 * 
 	 */
 	public static const PASSED:uint = 8;
@@ -103,7 +103,7 @@ public class Result
 	 * Specifies to include all the results types for 
 	 * the result filter methods.
 	 * 
-	 * @see #getResults()
+	 * @see #filterResults()
 	 * 
 	 */
 	public static const ALL:uint = 15;
@@ -158,7 +158,7 @@ public class Result
 	
 	/**
 	 * The total number of <code class="prettyprint">AtomicResult</code> 
-	 * objects recorded in this <code class="prettyprint">Result</code>.
+	 * objects recorded in this <code class="prettyprint">TestResult</code>.
 	 */
 	public function get numResults():uint
 	{
@@ -174,7 +174,7 @@ public class Result
 	/**
 	 * Constructor.
 	 */
-	public function Result() 
+	public function TestResult() 
 	{
 		super();
 		resultArray = new Array();
@@ -188,7 +188,7 @@ public class Result
 	
 	/**
 	 * Adds an <code class="prettyprint">AtomicResult</code> to 
-	 * this <code class="prettyprint">Result</code>.
+	 * this <code class="prettyprint">TestResult</code>.
 	 * 
 	 * @param atomicResult the <code class="prettyprint">AtomicResult</code> 
 	 * to be added.
@@ -199,11 +199,11 @@ public class Result
 	}
 	
 	/**
-	 * Returns a sub-result of this <code class="prettyprint">Result</code>.
+	 * Returns a sub-result of this <code class="prettyprint">TestResult</code>.
 	 * 
 	 * @param options The filter options to apply. You may use integers 
 	 * or the static properties defined by the 
-	 * <code class="prettyprint">Result</code> class. You may combine 
+	 * <code class="prettyprint">TestResult</code> class. You may combine 
 	 * several options by using the 
 	 * <code class="prettyprint">|</code> (bitwise OR) operator, as this 
 	 * example shows :<br/>
@@ -212,15 +212,15 @@ public class Result
 	 * 
 	 * // Will return all the results whose type is 
 	 * // EResultType.FAILURE and EResultType.PASSED
-	 * myResult.getResults(	
-	 * 						Result.FAILURES | 
-	 * 						Result.PASSED 
+	 * myResult.filterResults(	
+	 * 						TestResult.FAILURES | 
+	 * 						TestResult.PASSED 
 	 * 					);
 	 * 
 	 * </pre>
 	 * By default, all the results are included.
 	 * 
-	 * @return a sub-result of this <code class="prettyprint">Result</code> 
+	 * @return a sub-result of this <code class="prettyprint">TestResult</code> 
 	 * depending of the specified options.
 	 * 
 	 * @see EResultType
@@ -232,7 +232,7 @@ public class Result
 	 * @see #ALL
 	 * 
 	 */
-	public function getResults(options:uint = 0xf):Result
+	public function filterResults(options:uint = 0xf):TestResult
 	{
 		var results:Array;
 		switch (options)
@@ -314,17 +314,17 @@ public class Result
 				// no results. Not very useful...
 				results = new Array();
 		}
-		var result:Result = new Result();
+		var result:TestResult = new TestResult();
 		result.resultArray = results;
 		return result;
 	}
 	
 	/**
-	 * Sorts this <code class="prettyprint">Result</code> results with 
+	 * Sorts this <code class="prettyprint">TestResult</code> results with 
 	 * this specified <code class="prettyprint">ResultSortRule</code>.
 	 * 
 	 * @param rule The rule to apply to this 
-	 * <code class="prettyprint">Result</code>.
+	 * <code class="prettyprint">TestResult</code>.
 	 * 
 	 * @see astre.runner.manipulation.ResultSortRule
 	 * @see astre.runner.manipulation.resultRules
@@ -338,11 +338,11 @@ public class Result
 	/**
 	 * Returns an array of all the 
 	 * <code class="prettyprint">AtomicResult</code> objects in this 
-	 * <code class="prettyprint">Result</code>.
+	 * <code class="prettyprint">TestResult</code>.
 	 * 
 	 * @return an array of all the 
 	 * <code class="prettyprint">AtomicResult</code> objects in this 
-	 * <code class="prettyprint">Result</code>.
+	 * <code class="prettyprint">TestResult</code>.
 	 */
 	public function toArray():Array
 	{
@@ -350,8 +350,8 @@ public class Result
 	}
 	
 	/**
-	 * Returns an xml representation of this <code class="prettyprint">Result</code>.
-	 * @return an xml representation of this <code class="prettyprint">Result</code>.
+	 * Returns an xml representation of this <code class="prettyprint">TestResult</code>.
+	 * @return an xml representation of this <code class="prettyprint">TestResult</code>.
 	 */
 	public function toXML():XML 
 	{
@@ -360,9 +360,9 @@ public class Result
 		xmlResults.@runtime = totalRuntime.toString();
 		xmlResults.@memory = totalMemoryVariation.toString();
 		xmlResults.@numTests = numResults.toString();
-		xmlResults.@numFailures = this.getResults(Result.FAILURES).numResults.toString();
-		xmlResults.@numErrors = this.getResults(Result.ERRORS).numResults.toString();
-		xmlResults.@numIgnored = this.getResults(Result.IGNORED).numResults.toString();
+		xmlResults.@numFailures = this.filterResults(TestResult.FAILURES).numResults.toString();
+		xmlResults.@numErrors = this.filterResults(TestResult.ERRORS).numResults.toString();
+		xmlResults.@numIgnored = this.filterResults(TestResult.IGNORED).numResults.toString();
 		
 		var results:Array = this.resultArray;
 		for each (var atomicResult:AtomicResult in results)
@@ -395,17 +395,17 @@ public class Result
 	}
 	
 	/**
-	 * Returns a clone of this <code class="prettyprint">Result</code>.
-	 * @return a clone of this <code class="prettyprint">Result</code>.
+	 * Returns a clone of this <code class="prettyprint">TestResult</code>.
+	 * @return a clone of this <code class="prettyprint">TestResult</code>.
 	 */
-	public function clone():Result
+	public function clone():TestResult
 	{
 		var r:Array = new Array();
 		for each (var ar:AtomicResult in resultArray)
 		{
 			r.push(ar.clone());
 		}
-		var result:Result = new Result();
+		var result:TestResult = new TestResult();
 		result.resultArray = r;
 		return result;
 	}

@@ -73,7 +73,7 @@ public class EResultType
 	 * Defines the result for a test that has 
 	 * generated an unexpected error.
 	 */
-	public static const UNEXPECTED_ERROR:EResultType = new EResultType("unexpectedError");												""
+	public static const UNEXPECTED_ERROR:EResultType = new EResultType("unexpectedError");
 	
 	/**
 	 * Defines the result for a test that has been ignored.

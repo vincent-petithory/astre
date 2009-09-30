@@ -57,7 +57,7 @@ public class TestList
 	 * 
 	 * @see TestList#addTestClass()
 	 */
-	public static var staticTestListFunctionName:String = "list";
+	public static var staticTestListFunctionName:String = "testList";
 	
 	/**
 	 * @private
@@ -113,7 +113,7 @@ public class TestList
 	 * Adds a test object to this 
 	 * <code class="prettyprint">TestList</code>.
 	 * 
-	 * @param test The test to be added. It can be : 
+	 * @param test The test object to be added. It can be : 
      * <ul>
      * <li>a TestList class or instance, </li>
      * <li>a Test class or instance, </li>
@@ -121,7 +121,7 @@ public class TestList
      * </ul>
      * 
 	 */
-	public function addTest(test:*):void
+	public function add(test:*):void
 	{
 		if (test is Test)
 			addTest(test as Test);
@@ -129,6 +129,16 @@ public class TestList
 			addTestClass(test as Class);
 		else if (test is TestList)
 			addTestList(test as TestList);
+		else
+		{
+			throw new ArgumentError(
+			"The specified parameters must be "+
+			"either a astre.core.Test instance, "+
+			"a astre.core.TestList instance, "+
+			"a class extending Test "+
+			"or a class specifying a static "+
+			"method that returns a TestList.");
+		}
 	}
 
 	/**
@@ -207,13 +217,19 @@ public class TestList
 				}
 				this.addTestList(testList);
 			}
+			else if (Reflection.isSubClassOf(testClass, TestList))
+			{
+				testList.addTestList(new testClass() as TestList);
+				this.addTestList(testList);
+			}
 			else
 			{
 				throw new ArgumentError(
 					"The specified class "+testClass+" does not provide a "+
 					"static method named "+TestList.staticTestListFunctionName+
 					" "+"that returns a astre.core.TestList object "+
-					"or it is not a astre.core.Test subclass.");
+					"or it is neither a astre.core.Test "+
+					"nor astre.core.TestList subclass.");
 			}
 		}
 		else

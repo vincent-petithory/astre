@@ -29,7 +29,8 @@ import astre.core.TestDescription;
 
 /**
  * A <code class="prettyprint">RunConfiguration</code> is an object 
- * you pass to an <code class="prettyprint">ITestRunner</code>. 
+ * you pass to an <code class="prettyprint">ITestRunner</code>. Please note this
+ * is an advanced feature, so you don't need it in regular cases.
  * 
  * <p>Basically, it allows to select a test processor class to use 
  * for running the tests. Besides, the 

@@ -29,7 +29,7 @@ package astre.runner
  * 
  * @see TestRunner
  * @see RunRequest
- * @see Result
+ * @see TestResult
  * @see RunConfiguration
  * @see ProgressNotifier
  * @see astre.core.Test
@@ -101,14 +101,14 @@ public interface ITestRunner
 	function get numTestsRun():uint;
 	
 	/**
-	 * The <code class="prettyprint">Result</code> object containing the current 
+	 * The <code class="prettyprint">TestResult</code> object containing the current 
 	 * results of the global test processing.
 	 * 
 	 * <p>When this <code class="prettyprint">ITestRunner</code> has not been 
 	 * run yet, the value is <code class="prettyprint">null</code>.</p>
 	 * 
 	 */
-	function get results():Result;
+	function get testResult():TestResult;
 	
 	/**
 	 * The current configuration this 
@@ -138,12 +138,12 @@ public interface ITestRunner
 	 * The resources shared by all tests to be run by this 
 	 * <code class="prettyprint">ITestRunner</code>.
 	 */
-	function get testEnvs():TestEnv;
+	function get testEnv():TestEnv;
 	
 	/**
 	 * @private
 	 */
-	function set testEnvs(value:TestEnv):void;
+	function set testEnv(value:TestEnv):void;
 	
 }
 	

@@ -101,10 +101,37 @@ public class RunRequest
 	
 	/**
 	 * Constructor.
+	 * Creates a <code class="prettyprint">RunRequest</code> object 
+	 * using heterogeneous test objects.
+	 * 
+	 * <p>The specified parameters can be either a astre.core.Test instance,      * a astre.core.TestList instance, a class extending Test 
+	 * or a class specifying a static method that returns a TestList.<br/>
+	 * A class specifying a static method that returns a TestList can 
+	 * extend any class. If you provide a class extending 
+	 * <code class="prettyprint">astre.core.Test</code> with such a method,      * the tests specified in this static method will be considered 
+	 * rather than all the tests of the 
+	 * <code class="prettyprint">astre.core.Test</code> subclass.</p>
+	 * 
+	 * @param ...tests A list of valid test objects     * 
+	 * @return A <code class="prettyprint">RunRequest</code> object 
+	 * based on the specified heterogeneous test objects.
+	 * 
+	 * @throws   <code class="prettyprint">ArgumentError</code> - If 
+	 * the specified parameters must be 
+	 * either a astre.core.Test instance,      * a astre.core.TestList instance, a class extending Test 
+	 * or a class specifying a static method that returns a TestList.
+	 * 
 	 */
-	public function RunRequest() 
+	public function RunRequest(...tests) 
 	{
 		super();
+		
+		var list:TestList = new TestList();
+		for each (var obj:Object in tests)
+		{
+			list.add(obj);
+		}
+		this._tests = list.getTests();
 	}
 	
 	/**
@@ -195,197 +222,6 @@ public class RunRequest
 	{
 		_tests.sort(rule.compare);
 	}
-	
-	//------------------------------
-	// Factory functions
-	//------------------------------
-	
-	/**
-	 * Returns a <code class="prettyprint">RunRequest</code> object 
-	 * using heterogeneous test objects.
-	 * 
-	 * <p>The specified parameters can be either a astre.core.Test instance, 
-	 * a astre.core.TestList instance, a class extending Test 
-	 * or a class specifying a static method that returns a TestList.<br/>
-	 * A class specifying a static method that returns a TestList can 
-	 * extend any class. If you provide a class extending 
-	 * <code class="prettyprint">astre.core.Test</code> with such a method, 
-	 * the tests specified in this static method will be considered 
-	 * rather than all the tests of the 
-	 * <code class="prettyprint">astre.core.Test</code> subclass.</p>
-	 * 
-	 * @param ...tests A list of valid test objects
-	 * @return A <code class="prettyprint">RunRequest</code> object 
-	 * based on the specified heterogeneous test objects.
-	 * 
-	 * @throws   <code class="prettyprint"> ArgumentError</code> - If 
-	 * the specified parameters must be 
-	 * either a astre.core.Test instance, 
-	 * a astre.core.TestList instance, a class extending Test 
-	 * or a class specifying a static method that returns a TestList.
-	 * 
-	 */
-	public static function create(...tests):RunRequest
-	{
-		var r:RunRequest = new RunRequest();
-		var list:TestList = new TestList();
-		for each (var obj:Object in tests)
-		{
-			if (obj is Class)
-			{
-				list.addTestClass(obj as Class)
-			}
-			else if (obj is Test)
-			{
-				list.addTest(obj as Test)
-			}
-			else if (obj is TestList)
-			{
-				list.addTestList(obj as TestList)
-			}
-			else
-			{
-				throw new ArgumentError(
-				"The specified parameters must be "+
-				"either a astre.core.Test instance, "+
-				"a astre.core.TestList instance, "+
-				"a class extending Test "+
-				"or a class specifying a static "+
-				"method that returns a TestList.");
-			}
-		}
-		r._tests = list.getTests();
-		return r;
-	}
-	
-	/**
-	 * Returns a <code class="prettyprint">RunRequest</code> object 
-	 * based on the specified test classes.
-	 * 
-	 * <p>See the <code class="prettyprint">TestList.testClass()</code> 
-	 * for more information on which classes you can provide.</p>
-	 * 
-	 * @param ...testClasses A list of test classes.
-	 * @return A <code class="prettyprint">RunRequest</code> object 
-	 * based on the specified test classes.
-	 * 
-	 * @see #testClass()
-	 * 
-	 */
-	public static function testClasses(...testClasses):RunRequest
-	{
-		var list:TestList = new TestList();
-		for each (var clazz:Class in testClasses)
-		{
-			list.addTestClass(clazz);
-		} 
-		return testList(list);
-	}
-	
-	/**
-	 * Returns a <code class="prettyprint">RunRequest</code> object 
-	 * based on the specified test class.
-	 * 
-	 * <p>You can provide a <code class="prettyprint">astre.core.Test</code> 
-	 * subclass or any class specifying a static method that 
-	 * returns a TestList. If you provide a class extending 
-	 * <code class="prettyprint">astre.core.Test</code> with such a method, 
-	 * the tests specified in this static method will be considered 
-	 * rather than all the tests of the 
-	 * <code class="prettyprint">astre.core.Test</code> subclass.</p>
-	 * 
-	 * @param testClass The test class.
-	 * @return A <code class="prettyprint">RunRequest</code> object 
-	 * based on the specified test classes.
-	 * 
-	 */
-	public static function testClass(testClass:Class):RunRequest
-	{
-		var list:TestList = new TestList();
-		list.addTestClass(testClass);
-		return testList(list);
-	}
-	
-	/**
-	 * Returns a <code class="prettyprint">RunRequest</code> object 
-	 * based on the specified tests.
-	 * 
-	 * @param ...tests A list of <code class="prettyprint">Test</code> 
-	 * instances.
-	 * @return A <code class="prettyprint">RunRequest</code> object 
-	 * based on the specified tests.
-	 */
-	public static function tests(...tests):RunRequest
-	{
-		var list:TestList = new TestList();
-		for each (var test:Test in tests)
-		{
-			list.addTest(test);
-		}
-		
-		return testList(list);
-	}
-	
-	/**
-	 * Returns a <code class="prettyprint">RunRequest</code> object 
-	 * that contains a single test.
-	 * 
-	 * @example This example shows the basic usage of this method :
-	 * <pre class="prettyprint">
-	 * 
-	 * var runRequest:RunRequest = RunRequest.singleTest(
-	* 							new SingleTest("myTestMethod")
-	* 						);
-	 * 
-	 * </pre>
-	 * 
-	 * @param test The single test to run.
-	 * @return A <code class="prettyprint">RunRequest</code> object 
-	 * that contains a single test.
-	 */
-	public static function singleTest(test:Test):RunRequest
-	{
-		var req:RunRequest = new RunRequest();
-		req._tests = [test];
-		return req;
-	}
-	
-	/**
-	 * Returns a <code class="prettyprint">RunRequest</code> object 
-	 * based on the specified <code class="prettyprint">TestList</code> 
-	 * objects.
-	 * 
-	 * @param ...testLists A list of 
-	 * <code class="prettyprint">TestList</code> objects.
-	 * @return A <code class="prettyprint">RunRequest</code> object 
-	 * based on the specified test lists.
-	 */
-	public static function testLists(...testLists):RunRequest
-	{
-		var list:TestList = new TestList();
-		for each (var testList:TestList in testLists)
-		{
-			list.addTestList(testList);
-		}
-		return RunRequest.testList(list);
-	}
-	
-	/**
-	 * Returns a <code class="prettyprint">RunRequest</code> object 
-	 * based on the specified <code class="prettyprint">TestList</code>.
-	 * 
-	 * @param testList A <code class="prettyprint">TestList</code> 
-	 * object.
-	 * @return A <code class="prettyprint">RunRequest</code> object 
-	 * based on the specified <code class="prettyprint">TestList</code>.
-	 */
-	public static function testList(testList:TestList):RunRequest
-	{
-		var req:RunRequest = new RunRequest();
-		req._tests = testList.getTests();
-		return req;
-	}
-
 	
 }
 	

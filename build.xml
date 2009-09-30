@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<project name="Astre" default="compile" basedir=".">
+<project name="Astre" default="compile.lib" basedir=".">
     
 	<!-- Properties -->
 	
@@ -8,8 +8,6 @@
 	
 	<!-- Master tasks -->
 
-    <flexsdk location="/home/vincent/dev/flex_sdk_3.4.0.9271" />
-	
 	<target	name="compile" depends="compile.lib, compile.asdoc" />
 	
 	<target name="clean" depends="clean.lib, clean.asdoc, clean.package" description="Clean all resources" />
