@@ -36,7 +36,7 @@ package astre.core
  * <code class="prettyprint">AtomicResult</code> yourself. Instead, you will 
  * often access them through 
  * <code class="prettyprint">astre.runner.Result</code> objects or through 
- * the <code class="prettyprint">ITestListener.testEnd()</code> method.<br/>
+ * the <code class="prettyprint">ITestSuiteener.testEnd()</code> method.<br/>
  * For example :</p>
  * <pre class="prettyprint">
  * 

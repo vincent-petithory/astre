@@ -103,7 +103,7 @@ package astre.core
  * @see ITestProcess
  * @see ITestProcessor
  * @see astre.runner.ProgressNotifier
- * @see astre.runner.ITestListener
+ * @see astre.runner.ITestSuiteener
  * 
  * @author lunar
  * 

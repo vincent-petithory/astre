@@ -26,7 +26,7 @@ package astre.api
 	import flash.utils.getQualifiedClassName;
 
 /**
- * A <code class="prettyprint">TestList</code> object holds 
+ * A <code class="prettyprint">TestSuite</code> object holds 
  * a collection of tests that you can then pass to a runner 
  * using a <code class="prettyprint">RunRequest</code> object.
  * 
@@ -36,7 +36,7 @@ package astre.api
  * @author lunar
  * 
  */
-public class TestList 
+public class TestSuite 
 {
 	
 	//------------------------------
@@ -49,15 +49,15 @@ public class TestList
 	 * When writing a class that you pass to the 
 	 * <code class="prettyprint">addTestClass()</code> for creating 
 	 * a suite of tests, you may create a static method that returns a 
-	 * <code class="prettyprint">TestList</code>. If you do like this, 
+	 * <code class="prettyprint">TestSuite</code>. If you do like this, 
 	 * the name of your method must be the value of 
-	 * <code class="prettyprint">TestList.staticTestListFunctionName</code>.
+	 * <code class="prettyprint">TestSuite.staticTestSuiteFunctionName</code>.
 	 * 
-	 * @default testList
+	 * @default testSuite
 	 * 
-	 * @see TestList#addTestClass()
+	 * @see TestSuite#addTestClass()
 	 */
-	public static var staticTestListFunctionName:String = "testList";
+	public static var staticTestSuiteFunctionName:String = "suite";
 	
 	/**
 	 * @private
@@ -83,10 +83,10 @@ public class TestList
 	/**
 	 * @private
 	 * 
-	 * Tests and testList are in the 
+	 * Tests and testSuite are in the 
 	 * same array to keep order.
 	 */
-	private var _testsAndTestLists:Array;
+	private var _testsAndTestSuites:Array;
 	
 	//------------------------------
 	//
@@ -97,10 +97,10 @@ public class TestList
 	/**
 	 * Constructor.
 	 */
-	public function TestList() 
+	public function TestSuite() 
 	{
 		super();
-		_testsAndTestLists = new Array();
+		_testsAndTestSuites = new Array();
 	}
 	
 	//------------------------------
@@ -111,13 +111,13 @@ public class TestList
 	
 	/**
 	 * Adds a test object to this 
-	 * <code class="prettyprint">TestList</code>.
+	 * <code class="prettyprint">TestSuite</code>.
 	 * 
 	 * @param test The test object to be added. It can be : 
      * <ul>
-     * <li>a TestList class or instance, </li>
+     * <li>a TestSuite class or instance, </li>
      * <li>a Test class or instance, </li>
-     * <li>a class with a static method returning a TestList.</li>
+     * <li>a class with a static method returning a TestSuite.</li>
      * </ul>
      * 
 	 */
@@ -127,34 +127,34 @@ public class TestList
 			addTest(test as Test);
 		else if (test is Class)
 			addTestClass(test as Class);
-		else if (test is TestList)
-			addTestList(test as TestList);
+		else if (test is TestSuite)
+			addTestSuite(test as TestSuite);
 		else
 		{
 			throw new ArgumentError(
 			"The specified parameters must be "+
 			"either a astre.core.Test instance, "+
-			"a astre.core.TestList instance, "+
+			"a astre.core.TestSuite instance, "+
 			"a class extending Test "+
 			"or a class specifying a static "+
-			"method that returns a TestList.");
+			"method that returns a TestSuite.");
 		}
 	}
 
 	/**
 	 * Adds a test to this 
-	 * <code class="prettyprint">TestList</code>.
+	 * <code class="prettyprint">TestSuite</code>.
 	 * 
 	 * @param test The test to be added.
 	 */
 	protected function addTest(test:Test):void
 	{
-		_testsAndTestLists.push(test);
+		_testsAndTestSuites.push(test);
 	}
 	
 	/**
-	 * Uses a class to add tests and/or test lists to this 
-	 * <code class="prettyprint">TestList</code>.
+	 * Uses a class to add tests and/or test suites to this 
+	 * <code class="prettyprint">TestSuite</code>.
 	 * 
 	 * <p>You may pass :
 	 * <ul>
@@ -166,29 +166,29 @@ public class TestList
 	 * you may
 	 * <li>extends <code class="prettyprint">astre.core.Test</code> and 
 	 * provides a static method that returns a 
-	 * <code class="prettyprint">TestList</code> and whose name matches 
+	 * <code class="prettyprint">TestSuite</code> and whose name matches 
 	 * the value of the 
-	 * <code class="prettyprint">staticTestListFunctionName</code> 
+	 * <code class="prettyprint">staticTestSuiteFunctionName</code> 
 	 * property.</li>
 	 * <li>Any class that provides a static method that returns a 
-	 * <code class="prettyprint">TestList</code> and whose name matches 
+	 * <code class="prettyprint">TestSuite</code> and whose name matches 
 	 * the value of the 
-	 * <code class="prettyprint">staticTestListFunctionName</code> 
+	 * <code class="prettyprint">staticTestSuiteFunctionName</code> 
 	 * property.</li>
 	 * </ul>
 	 * </p>
 	 * 
 	 * @param testClass The class to be processed for adding 
-	 * tests and test lists.
+	 * tests and test suites.
 	 * 
 	 * @throws   <code class="prettyprint">ArgumentError</code> - If 
 	 * the specified class does not provide a 
-	 * static method that returns a astre.core.TestList object 
+	 * static method that returns a astre.core.TestSuite object 
 	 * or it is not a astre.core.Test subclass.
 	 * @throws   <code class="prettyprint">TypeError</code> - If 
 	 * the specified class is null.
 	 * 
-	 * @see TestList#staticTestListFunctionName
+	 * @see TestSuite#staticTestSuiteFunctionName
 	 */
 	protected function addTestClass(testClass:Class):void
 	{
@@ -196,40 +196,40 @@ public class TestList
 		{
 			var desc:XMLList = 
 				describeType(testClass).child("method").(@name == 
-					TestList.staticTestListFunctionName);
+					TestSuite.staticTestSuiteFunctionName);
 			if (desc.length() == 1 && 
-				desc.@returnType == getQualifiedClassName(TestList)
+				desc.@returnType == getQualifiedClassName(TestSuite)
 				)
 			{
-				this.addTestList(
-					testClass[TestList.staticTestListFunctionName].apply(testClass)
+				this.addTestSuite(
+					testClass[TestSuite.staticTestSuiteFunctionName].apply(testClass)
 				);
 			}
 			else if (Reflection.isSubClassOf(testClass, Test))
 			{
-				var testList:TestList = new TestList();
+				var testSuite:TestSuite = new TestSuite();
 				var methods:Array = Reflection.getMethods(testClass);
 				// reverse for alphabetical order by default
 				methods = methods.filter(testMethodFilter).reverse();
 				for each (var method:String in methods)
 				{
-					testList.addTest(new testClass(method) as Test);
+					testSuite.addTest(new testClass(method) as Test);
 				}
-				this.addTestList(testList);
+				this.addTestSuite(testSuite);
 			}
-			else if (Reflection.isSubClassOf(testClass, TestList))
+			else if (Reflection.isSubClassOf(testClass, TestSuite))
 			{
-				testList.addTestList(new testClass() as TestList);
-				this.addTestList(testList);
+				testSuite.addTestSuite(new testClass() as TestSuite);
+				this.addTestSuite(testSuite);
 			}
 			else
 			{
 				throw new ArgumentError(
 					"The specified class "+testClass+" does not provide a "+
-					"static method named "+TestList.staticTestListFunctionName+
-					" "+"that returns a astre.core.TestList object "+
+					"static method named "+TestSuite.staticTestSuiteFunctionName+
+					" "+"that returns a astre.core.TestSuite object "+
 					"or it is neither a astre.core.Test "+
-					"nor astre.core.TestList subclass.");
+					"nor astre.core.TestSuite subclass.");
 			}
 		}
 		else
@@ -239,50 +239,50 @@ public class TestList
 	}
 	
 	/**
-	 * Adds a test list to this <code class="prettyprint">TestList</code>.
+	 * Adds a test suite to this <code class="prettyprint">TestSuite</code>.
 	 * 
-	 * @param testList The <code class="prettyprint">TestList</code> to 
+	 * @param testSuite The <code class="prettyprint">TestSuite</code> to 
 	 * be added.
 	 * 
 	 * @throws   <code class="prettyprint">TypeError</code> - If the 
 	 * specified 
-	 * <code class="prettyprint">TestList</code> is 
+	 * <code class="prettyprint">TestSuite</code> is 
 	 * <code class="prettyprint">null</code>.
 	 * 
 	 */
-	protected function addTestList(testList:TestList):void
+	protected function addTestSuite(testSuite:TestSuite):void
 	{
-		if (testList != null)
+		if (testSuite != null)
 		{
-			_testsAndTestLists.push(testList as TestList);
+			_testsAndTestSuites.push(testSuite as TestSuite);
 		}
 		else
 		{
-			throw new TypeError("The specified testList must not be null");
+			throw new TypeError("The specified testSuite must not be null");
 		}
 	}
 	
 	/**
 	 * Returns an array of the tests this 
-	 * <code class="prettyprint">TestList</code> carry.
+	 * <code class="prettyprint">TestSuite</code> carry.
 	 * 
-	 * <p>Nested <code class="prettyprint">TestList</code> this 
-	 * <code class="prettyprint">TestList</code> carry are recursively 
+	 * <p>Nested <code class="prettyprint">TestSuite</code> this 
+	 * <code class="prettyprint">TestSuite</code> carry are recursively 
 	 * processed to return only <code class="prettyprint">Test</code> 
 	 * instances.</p>
 	 * 
 	 * @return an array of the tests this 
-	 * <code class="prettyprint">TestList</code> carry.
+	 * <code class="prettyprint">TestSuite</code> carry.
 	 */
 	public function getTests():Array
 	{
 		var tests:Array = new Array();
 		
-		for each (var obj:* in _testsAndTestLists)
+		for each (var obj:* in _testsAndTestSuites)
 		{
-			if (obj is TestList)
+			if (obj is TestSuite)
 			{
-				tests = tests.concat((obj as TestList).getTests());
+				tests = tests.concat((obj as TestSuite).getTests());
 			}
 			else if (obj is Test)
 			{
@@ -293,23 +293,23 @@ public class TestList
 	}
 	
 	/**
-	 * Returns a clone of this <code class="prettyprint">TestList</code>.
-	 * @return a clone of this <code class="prettyprint">TestList</code>.
+	 * Returns a clone of this <code class="prettyprint">TestSuite</code>.
+	 * @return a clone of this <code class="prettyprint">TestSuite</code>.
 	 */
-	public function clone():TestList
+	public function clone():TestSuite
 	{
-		var cloneTestsAndTestLists:Array = new Array();
+		var cloneTestsAndTestSuites:Array = new Array();
 		
-		for each (var obj:* in _testsAndTestLists)
+		for each (var obj:* in _testsAndTestSuites)
 		{
-			if (obj is TestList || obj is Test)
+			if (obj is TestSuite || obj is Test)
 			{
-				cloneTestsAndTestLists.push(obj.clone());
+				cloneTestsAndTestSuites.push(obj.clone());
 			}
 		}
-		var cloneList:TestList = new TestList();
-		cloneList._testsAndTestLists = cloneTestsAndTestLists;
-		return cloneList;
+		var cloneSuite:TestSuite = new TestSuite();
+		cloneSuite._testsAndTestSuites = cloneTestsAndTestSuites;
+		return cloneSuite;
 	}
 	
 }

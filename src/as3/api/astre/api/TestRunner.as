@@ -42,12 +42,12 @@ package astre.api
  * 
  * <p><strong>Note :</strong> As a reference, 
  * <code class="prettyprint">TestRunner</code>s are 
- * <code class="prettyprint">ITestListener</code>s with a 
+ * <code class="prettyprint">ITestSuiteener</code>s with a 
  * priority registration of -255 (-0xff).So, by default, a 
  * <code class="prettyprint">TestRunner</code> will process 
  * notifications of the related 
  * <code class="prettyprint">IProgressNotifier</code> before other 
- * <code class="prettyprint">ITestListener</code>.</p>
+ * <code class="prettyprint">ITestSuiteener</code>.</p>
  * 
  * @example This code shows how to create and run a 
  * <code class="prettyprint">TestRunner</code>. As an 
@@ -69,7 +69,7 @@ package astre.api
  * </pre>
  * 
  * @see RunRequest
- * @see astre.runner.ITestListener#registerToNotifier()
+ * @see astre.runner.ITestSuiteener#registerToNotifier()
  * 
  * @author lunar
  * 

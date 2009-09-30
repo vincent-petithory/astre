@@ -44,7 +44,7 @@ package astre.api
  * <pre class="prettyprint">
  * 
  * var runRequest:RunRequest = RunRequest.create(
- * 										myTestClass, new TestListExample(), 
+ * 										myTestClass, new TestSuiteExample(), 
  * 										new SingleTest("myTestMethod")
  * 									);
  * 
@@ -55,7 +55,7 @@ package astre.api
  * 
  * @see TestRunner
  * @see astre.core.Test
- * @see astre.core.TestList
+ * @see astre.core.TestSuite
  * 
  * @author lunar
  * 
@@ -102,9 +102,9 @@ public class RunRequest
 	 * Creates a <code class="prettyprint">RunRequest</code> object 
 	 * using heterogeneous test objects.
 	 * 
-	 * <p>The specified parameters can be either a astre.core.Test instance,      * a astre.core.TestList instance, a class extending Test 
-	 * or a class specifying a static method that returns a TestList.<br/>
-	 * A class specifying a static method that returns a TestList can 
+	 * <p>The specified parameters can be either a astre.core.Test instance,      * a astre.core.TestSuite instance, a class extending Test 
+	 * or a class specifying a static method that returns a TestSuite.<br/>
+	 * A class specifying a static method that returns a TestSuite can 
 	 * extend any class. If you provide a class extending 
 	 * <code class="prettyprint">astre.core.Test</code> with such a method,      * the tests specified in this static method will be considered 
 	 * rather than all the tests of the 
@@ -116,15 +116,15 @@ public class RunRequest
 	 * 
 	 * @throws   <code class="prettyprint">ArgumentError</code> - If 
 	 * the specified parameters must be 
-	 * either a astre.core.Test instance,      * a astre.core.TestList instance, a class extending Test 
-	 * or a class specifying a static method that returns a TestList.
+	 * either a astre.core.Test instance,      * a astre.core.TestSuite instance, a class extending Test 
+	 * or a class specifying a static method that returns a TestSuite.
 	 * 
 	 */
 	public function RunRequest(...tests) 
 	{
 		super();
 		
-		var list:TestList = new TestList();
+		var list:TestSuite = new TestSuite();
 		for each (var obj:Object in tests)
 		{
 			list.add(obj);

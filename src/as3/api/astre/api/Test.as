@@ -103,7 +103,7 @@ package astre.api
  * @see TraceUtil
  * @see astre.core.processor.TestProcessor
  * @see astre.core.ITestRunner
- * @see TestList
+ * @see TestSuite
  * @see astre.core.AtomicResult
  * @see astre.core.TestDescription
  * @see astre.async.IAsyncCheckout

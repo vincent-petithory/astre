@@ -26,14 +26,14 @@ package astre.core
 	import astre.api.Test;
 	
 /**
- * The <code class="prettyprint">ITestListener</code> interface defines 
+ * The <code class="prettyprint">ITestSuiteener</code> interface defines 
  * objects that listens the progress of test processes, 
  * tests and test runners.
  * 
  * <p>Generally, you will use the 
- * <code class="prettyprint">astre.runner.AbstractTestListener</code> 
+ * <code class="prettyprint">astre.runner.AbstractTestSuiteener</code> 
  * class to create your listeners rather than directly implementing the 
- * <code class="prettyprint">ITestListener</code> interface.<br/> 
+ * <code class="prettyprint">ITestSuiteener</code> interface.<br/> 
  * Using the 
  * <code class="prettyprint">ITestRunner.progressNotifier</code> 
  * property is another way to listen to test process events.</p>
@@ -148,15 +148,15 @@ public interface ITestListener
 	/**
 	 * Registers to the specified 
 	 * <code class="prettyprint">IProgressNotifier</code> so that 
-	 * this <code class="prettyprint">ITestListener</code> can be notified.
+	 * this <code class="prettyprint">ITestSuiteener</code> can be notified.
 	 * 
 	 * @param notifier The <code class="prettyprint">IProgressNotifier</code> 
 	 * to be registered to.
 	 * @param priority Indicates the priority of this 
-	 * <code class="prettyprint">ITestListener</code> among 
-	 * other <code class="prettyprint">ITestListener</code> that 
+	 * <code class="prettyprint">ITestSuiteener</code> among 
+	 * other <code class="prettyprint">ITestSuiteener</code> that 
 	 * share the specified <code class="prettyprint">IProgressNotifier</code>.
-	 * <code class="prettyprint">ITestListener</code> objects 
+	 * <code class="prettyprint">ITestSuiteener</code> objects 
 	 * which have registered a 
 	 * <code class="prettyprint">IProgressNotifier</code> with a high priority 
 	 * value will be notified before those with a low priority value.
@@ -166,7 +166,7 @@ public interface ITestListener
 	/**
 	 * Unregisters from the specified 
 	 * <code class="prettyprint">IProgressNotifier</code> so that 
-	 * this <code class="prettyprint">ITestListener</code> is not 
+	 * this <code class="prettyprint">ITestSuiteener</code> is not 
 	 * notified anymore.
 	 * 
 	 * @param notifier The <code class="prettyprint">IProgressNotifier</code> 
@@ -178,12 +178,12 @@ public interface ITestListener
 	/**
 	 * Checks the specified 
 	 * <code class="prettyprint">IProgressNotifier</code> is 
-	 * registered by this <code class="prettyprint">ITestListener</code>.
+	 * registered by this <code class="prettyprint">ITestSuiteener</code>.
 	 * 
 	 * @param notifier The notifier to be checked for registration.
 	 * @return <code class="prettyprint">true</code> if this 
 	 * <code class="prettyprint">IProgressNotifier</code> is
-	 * registered by this <code class="prettyprint">ITestListener</code>.
+	 * registered by this <code class="prettyprint">ITestSuiteener</code>.
 	 * Otherwise, <code class="prettyprint">false</code>.
 	 */
 	function isRegisteredTo(notifier:IProgressNotifier):Boolean;
