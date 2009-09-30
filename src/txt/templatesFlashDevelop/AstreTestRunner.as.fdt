@@ -1,0 +1,42 @@
+package $(Package) $(CSLB){
+
+import astre.printer.ResultPrinter;
+import astre.runner.ITestListener;
+import astre.runner.ITestRunner;
+import astre.runner.manipulation.runRequestRules.TestDescriptionSortRule;
+import astre.runner.RunRequest;
+import astre.runner.TestRunner;
+
+import flash.display.Sprite;
+
+public class $(FileName) extends Sprite $(CSLB){
+	public static const TEST_OBJECT:Object = createTestObject();
+	
+	private var runner:ITestRunner;
+	private var testResultPrinter:ITestListener;
+	
+	private static function createTestObject():Object $(CSLB){
+		var obj:Object;
+		// Specify your Test, TestList or test class here.
+		$(EntryPoint)
+		return obj;
+	}
+	
+	public function $(FileName)() $(CSLB){
+		super();
+		runner = new TestRunner();
+		
+		testResultPrinter = new ResultPrinter(false, true, true, true);
+		testResultPrinter.registerToNotifier(runner.progressNotifier);
+		
+		var request:RunRequest = RunRequest.create(TEST_OBJECT);
+		request.sort(new TestDescriptionSortRule());
+		
+		runner.runWith(request);
+	}
+	
+	
+	
+}
+	
+}

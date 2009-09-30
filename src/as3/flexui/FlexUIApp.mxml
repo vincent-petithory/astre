@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<mx:Application layout="absolute" xmlns:flexui="astre.flexui.*" xmlns:mx="http://www.adobe.com/2006/mxml">
+	
+	<flexui:AstreComponent testObject="{AllTopLevelTests}" />
+	
+</mx:Application>

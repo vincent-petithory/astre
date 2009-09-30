@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<flex-config>
+	
+	<packages>
+		<package>
+			<string>astre.async</string>
+			<string><![CDATA[The astre.async package contains classes for the asynchronous checkouts API.]]></string>
+		</package>
+		<package>
+			<string>astre.conditions</string>
+			<string><![CDATA[The astre.conditions package contains the base classes for creating conditions, along with common used condition classes.]]></string>
+		</package>
+		<package>
+			<string>astre.core</string>
+			<string><![CDATA[The astre package contains the top-level classes of the Astre Framework.]]></string>
+		</package>
+		<package>
+			<string>astre.printer</string>
+			<string><![CDATA[The astre.printer package contains the classes for live result's printing.]]></string>
+		</package>
+		<package>
+			<string>astre.processor</string>
+			<string><![CDATA[The astre.processor package contains all the core classes of the Test Processing API.]]></string>
+		</package>
+		<package>
+			<string>astre.processor.process</string>
+			<string><![CDATA[The astre.processor.process package contains processes that can be executed by the test processors.]]></string>
+		</package>
+		<package>
+			<string>astre.runner</string>
+			<string><![CDATA[The astre.runner package contains classes for running, manipulating tests along with collecting and manipulating results.]]></string>
+		</package>
+		<package>
+			<string>astre.runner.manipulation</string>
+			<string><![CDATA[The astre.runner.manipulation package contains classes for manipulating tests and their results.]]></string>
+		</package>
+		<package>
+			<string>astre.runner.manipulation.resultRules</string>
+			<string><![CDATA[The astre.runner.manipulation.resultRules package contains classes for manipulating test results.]]></string>
+		</package>
+		<package>
+			<string>astre.runner.manipulation.runRequestRules</string>
+			<string><![CDATA[The astre.runner.manipulation.runRequestRules package contains classes for manipulating the tests' run sequence.]]></string>
+		</package>
+		<package>
+			<string>astre.util</string>
+			<string><![CDATA[The astre.util package contains classes to help creating enumerations, ready-to-use logging and do code reflection.]]></string>
+		</package>
+	</packages>
+	
+</flex-config>

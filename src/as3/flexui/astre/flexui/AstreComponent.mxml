@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<mx:Panel styleName="astreTestRunnerPanel" initialize="init();" xmlns:mx="http://www.adobe.com/2006/mxml">
+	
+	
+	<mx:Style>
+		
+		Panel.astreTestRunnerPanel
+		{
+			borderStyle: none;
+		}
+		
+	</mx:Style>
+	
+	<mx:Script>
+		<![CDATA[
+			
+		import astre.core.AtomicResult;
+		import astre.processor.IProgressNotifier;
+		import astre.runner.RunEvent;
+		import astre.runner.RunRequest;
+		import astre.runner.TestEvent;
+		import astre.runner.TestRunner;
+		import flash.events.Event;
+		import mx.controls.List;
+		
+		
+		private var runner:TestRunner;
+		private var request:RunRequest;
+		
+		private var dataProvider:XML;
+		
+		private var _testObject:Object;
+		
+		public function get testObject():Object { return _testObject; }
+		
+		public function set testObject(value:Object):void 
+		{
+			_testObject = value;
+			request = RunRequest.create(_testObject);
+		}
+		
+		private function init():void
+		{
+			runner = new TestRunner();
+			var pn:IProgressNotifier = runner.progressNotifier;
+			pn.addEventListener(TestEvent.TEST_END, onTestEnd);
+			pn.addEventListener(RunEvent.RUN_START, onStart);
+			pn.addEventListener(RunEvent.RUN_END, onEnd);
+		}
+		
+		private function onTestEnd(e:TestEvent):void 
+		{
+			progressBar.setProgress(runner.numTestsRun, runner.numTests);
+			progressBar.label = runner.numTestsRun+" / "+runner.numTests;
+			
+			var item:Object = {label: e.result.toString(), data: e.result};
+			addToResultList(item);
+			resultsList.verticalScrollPosition = resultsList.maxVerticalScrollPosition;
+		}
+		
+		private function addToResultList(item:Object):void
+		{
+			var dataProvider:Array = resultsList.dataProvider;
+			dataProvider.push(item);
+			resultsList.dataProvider = dataProvider;
+		}
+		
+		private function onStart(e:RunEvent):void 
+		{
+			this.setCurrentState("running");
+		}
+		
+		private function onEnd(e:RunEvent):void 
+		{
+			setStandbyState();
+		}
+			
+		private function run():void
+		{
+			runner.runWith(request);
+		}
+		
+		private function pause():void
+		{
+			runner.pause();
+			setStandbyState();
+		}
+		
+		private function resume():void
+		{
+			runner.resume();
+			setRunningState();
+		}
+		
+		]]>
+	</mx:Script>
+	
+	<mx:Tree id="resultsList" width="100%" height="100%" />
+	
+	<mx:ControlBar>
+		<mx:Button label="Run" click="run();" />
+		<mx:Button label="Pause" click="pause();" />
+		<mx:Button label="Resume" click="resume();" />
+	</mx:ControlBar>
+	
+	
+	<mx:states>
+		<mx:State name="notStarted">
+			
+		</mx:State>
+		<mx:State name="running">
+			
+		</mx:State>
+		<mx:State name="displayResult">
+			
+		</mx:State>
+	</mx:states>
+	
+</mx:Panel>

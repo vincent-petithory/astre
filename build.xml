@@ -1,0 +1,180 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<project name="Astre" default="compile" basedir=".">
+    
+	<!-- Properties -->
+	
+	<property file="${basedir}/build/build.properties" />
+	<taskdef file="${basedir}/build/flexc.tasks" classpath="${basedir}/build/flexc.jar" />
+	
+	<!-- Master tasks -->
+
+    <flexsdk location="/home/vincent/dev/flex_sdk_3.4.0.9271" />
+	
+	<target	name="compile" depends="compile.lib, compile.asdoc" />
+	
+	<target name="clean" depends="clean.lib, clean.asdoc, clean.package" description="Clean all resources" />
+	
+	<!-- Package -->
+	
+	<target name="clean.package">
+		<delete dir="${package.versiondir}" />
+	</target>
+		
+	<target name="package" depends="clean.package, compile" description="Compile library, create doc and package all">
+		<mkdir dir="${package.versiondir}" />
+		<mkdir dir="${package.src}" />
+		<mkdir dir="${package.lib}" />
+		<mkdir dir="${package.asdoc}" />
+		
+		<copy file="${astre.license}" todir="${package.versiondir}"/>
+		<copy file="${lib.output}" todir="${package.lib}"/>
+		<copy todir="${package.src}">
+			<fileset dir="${src}"/>
+		</copy>
+		<copy todir="${package.asdoc}">
+			<fileset dir="${asdoc.dir}"/>
+		</copy>
+		<copy todir="${package.unittests}">
+			<fileset dir="${unittests.dir}"/>
+		</copy>
+		
+			<!-- all -->
+		
+		<tar destfile="${package.versiondir}/${package.name}.tar">
+			<tarfileset id="package_src" dir="${package.src}" prefix="${package.name}/src" /> 
+			<tarfileset id="package_lib" dir="${package.lib}" prefix="${package.name}/lib" /> 
+			<tarfileset id="package_asdoc" dir="${package.asdoc}" prefix="${package.name}/asdoc" /> 
+			<tarfileset id="package_license" dir="${package.versiondir}" includes="License.txt" fullpath="${package.name}/License.txt"/>
+		</tar>
+		<gzip destfile="${package.versiondir}/${package.name}.tar.gz" src="${package.versiondir}/${package.name}.tar"/>
+		<zip destfile="${package.versiondir}/${package.name}.zip">
+			<tarfileset src="${package.versiondir}/${package.name}.tar"/>
+		</zip>
+		<delete file="${package.versiondir}/${package.name}.tar" />
+		
+			<!-- docs -->
+		
+		<tar destfile="${package.versiondir}/${package.name}_docs.tar">
+			<tarfileset refid="package_asdoc" />
+			<tarfileset refid="package_license" />
+		</tar>
+		<gzip destfile="${package.versiondir}/${package.name}_docs.tar.gz" src="${package.versiondir}/${package.name}_docs.tar"/>
+		<zip destfile="${package.versiondir}/${package.name}_docs.zip">
+			<tarfileset src="${package.versiondir}/${package.name}_docs.tar"/>
+		</zip>
+		<delete file="${package.versiondir}/${package.name}_docs.tar" />
+		
+			<!-- src -->
+		
+		<tar destfile="${package.versiondir}/${package.name}_src.tar">
+			<tarfileset refid="package_src" />
+			<tarfileset refid="package_license" />
+		</tar>
+		<gzip destfile="${package.versiondir}/${package.name}_src.tar.gz" src="${package.versiondir}/${package.name}_src.tar"/>
+		<zip destfile="${package.versiondir}/${package.name}_src.zip">
+			<tarfileset src="${package.versiondir}/${package.name}_src.tar"/>
+			<zipfileset dir="." includes="${projectroot}/License.txt" fullpath="${package.versiondir}"/>
+		</zip>
+		<delete file="${package.versiondir}/${package.name}_src.tar" />
+			
+			<!-- moving -->
+		<mkdir dir="${package.archives}" />
+		<move todir="${package.archives}">
+			<fileset dir="${package.versiondir}">
+				<include name="**/*.tar.gz"/>
+				<include name="**/*.zip"/>
+			</fileset>
+		</move>
+		<copy todir="${package.archives}">
+			<fileset dir="${package.lib}" />
+		</copy>
+	</target>
+	
+	<!-- Library -->
+	
+	<target name="clean.lib">
+		<delete dir="${lib.dir}" />
+    </target>
+	
+	<target name="compile.lib" depends="timestamp, clean.lib">
+		<mkdir dir="${lib.dir}" />
+		
+		<property file="${astre.build.file}" />
+		<loadresource property="astre.version.complete">
+			<propertyresource name="astre.version.pattern" />
+			<filterchain>
+				<replacetokens>
+					<token key="BUILD" value="${build.number}"/>
+				</replacetokens>
+				<expandproperties />
+			</filterchain>
+		</loadresource>
+		
+		<loadresource property="lib.swc">
+			<propertyresource name="lib.swc.pattern" />
+			<filterchain>
+				<expandproperties />
+			</filterchain>
+		</loadresource>
+		
+		<loadresource property="lib.output">
+			<propertyresource name="lib.output.pattern" />
+			<filterchain>
+				<expandproperties />
+			</filterchain>
+		</loadresource>
+		
+		<echo message="Building ${lib.swc}..." />
+		<compc failonerror="true" >
+			<arg value="-debug=${lib.debug}"/>
+			<arg value="-keep-as3-metadata ${lib.as3.metadata}"/>
+			<arg value="-title ${lib.metadata.title} " />
+			<arg value="-description ${lib.metadata.description}" />
+			<arg value="-publisher ${lib.metadata.publisher}" />
+			<arg value="-creator ${lib.metadata.creator}" />
+			<arg value="-date ${lib.metadata.date}" />
+			<arg value="-language ${lib.metadata.language}" /> 
+			<arg value="-include-sources ${lib.sources}" />
+			<arg value="-sp ${src} " />
+			<arg value="-o ${lib.output}" />
+		</compc>
+		<buildnumber file="${astre.build.file}" />
+    </target>
+	
+	<!-- Documentation -->
+	
+	<target name="clean.asdoc">
+		<delete dir="${asdoc.dir}" />
+    </target>
+	
+	<target name="compile.asdoc" depends="timestamp, clean.asdoc">
+		<mkdir dir="${asdoc.dir}" />
+		<asdoc failonerror="true" >
+			<arg value="-main-title=${asdoc.title.main}" />
+			<arg value="-window-title=${asdoc.title.window}" />
+			<arg value="-footer=${asdoc.title.footer}" />
+			<arg value="-title ${asdoc.metadata.title} " />
+			<arg value="-description ${asdoc.metadata.description}" />
+			<arg value="-publisher ${asdoc.metadata.publisher}" />
+			<arg value="-creator ${asdoc.metadata.creator}" />
+			<arg value="-date ${asdoc.metadata.date}" />
+			<arg value="-language ${asdoc.metadata.language}" />
+			<arg value="-templates-path ${asdoc.templatespath}" />
+			<arg value="-load-config+=${asdoc.config}" />
+			<arg value="-sp ${src}" />
+			<arg value="-doc-sources ${asdoc.sources}" />
+			<arg value="-o ${asdoc.dir}" />
+		</asdoc>
+		<copy file="${asdoc.overview}" todir="${asdoc.dir}"/>
+    </target>
+	
+	<!-- Others -->
+	
+	<target name="timestamp">
+		<tstamp>
+			<format property="lib.metadata.date" pattern="dd/MM/yyyy" locale="en,UK"/>
+			<format property="asdoc.metadata.date" pattern="dd/MM/yyyy" locale="en,UK"/>
+		</tstamp>
+	</target>
+	
+</project>

@@ -1,0 +1,25 @@
+package $(Package) $(CSLB){
+
+import astre.core.Test;
+
+public class $(FileName) extends Test $(CSLB){
+	
+	public function $(FileName)(name:String) $(CSLB){
+		super(name);
+	}
+	
+	override public function setUp():void $(CSLB){
+		
+	}
+	
+	override public function tearDown():void $(CSLB){
+		
+	}
+	
+	public function myTest():void $(CSLB){
+		$(EntryPoint)
+	}
+	
+}
+	
+}
