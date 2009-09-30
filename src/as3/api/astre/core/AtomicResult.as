@@ -21,7 +21,8 @@
 
 package astre.core  
 {
-	import astre.core.Test;
+	import astre.api.Test;
+	import astre.api.EResultType;
 	import astre.core.TestDescription;
 	import astre.core.TestError;
 
@@ -50,8 +51,8 @@ package astre.core
  * 
  * 
  * @see astre.runner.Result
- * @see astre.processor.TestProcessor
- * @see astre.processor.ITestProcess
+ * @see astre.core.processor.TestProcessor
+ * @see astre.core.processor.ITestProcess
  * @see EResultType
  * @see TestDescription
  * 

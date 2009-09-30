@@ -21,8 +21,8 @@
 
 package astre.core 
 {
-	import astre.core.Astre;
-	import astre.util.Reflection;
+
+import astre.api.Test;
 
 /**
  * The <code class="prettyprint">TestDescription</code> class holds 

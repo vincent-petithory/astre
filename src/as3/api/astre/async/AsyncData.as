@@ -21,7 +21,7 @@
 
 package astre.async 
 {
-	import astre.processor.IRunnable;
+	import astre.core.processor.IRunnable;
 	import flash.events.Event;
 
 /**

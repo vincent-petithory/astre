@@ -21,14 +21,10 @@
 
 package astre.api 
 {
-	import astre.printer.ResultPrinter;
-	import astre.runner.ITestListener;
-	import astre.runner.ITestRunner;
-	import astre.runner.manipulation.runRequestRules.TestDescriptionSortRule;
-	import astre.runner.RunConfiguration;
-	import astre.runner.RunRequest;
-	import astre.runner.TestEnv;
-	import astre.runner.TestRunner;
+	import astre.core.ITestListener;
+	import astre.core.ITestRunner;
+	import astre.core.manipulation.runRequestRules.TestDescriptionSortRule;
+	import astre.core.RunConfiguration;
 
 /**
  * A simple class whose unique method serves as a shortcut for 

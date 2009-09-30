@@ -22,12 +22,14 @@
 package astre.core 
 {
 
+import astre.api.AssertionError;
+
 /**
  * The <code class="prettyprint">TestError</code> class is used 
  * internally to hold informations about the error that caused the 
  * related test to fail or generate an unexpected error.
  * 
- * @see AssertionError
+ * @see astre.api.AssertionError
  * @see AtomicResult
  * 
  * @author lunar

@@ -21,7 +21,6 @@
 
 package astre.conditions 
 {
-	import astre.core.ICondition;
 
 /**
  * A <code class="prettyprint">CombinedCondition</code> combines 

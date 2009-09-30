@@ -44,7 +44,7 @@ package astre.async
  * <br/>
  * You do not need to use this class in your tests.</p>
  * 
- * @see astre.processor.process.AsyncProcess
+ * @see astre.core.processor.process.AsyncProcess
  * 
  * @author lunar
  * 
