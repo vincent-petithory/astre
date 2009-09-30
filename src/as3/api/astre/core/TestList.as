@@ -57,7 +57,7 @@ public class TestList
 	 * 
 	 * @see TestList#addTestClass()
 	 */
-	public static var staticTestListFunctionName:String = "testList";
+	public static var staticTestListFunctionName:String = "list";
 	
 	/**
 	 * @private
@@ -110,12 +110,34 @@ public class TestList
 	//------------------------------
 	
 	/**
+	 * Adds a test object to this 
+	 * <code class="prettyprint">TestList</code>.
+	 * 
+	 * @param test The test to be added. It can be : 
+     * <ul>
+     * <li>a TestList class or instance, </li>
+     * <li>a Test class or instance, </li>
+     * <li>a class with a static method returning a TestList.</li>
+     * </ul>
+     * 
+	 */
+	public function addTest(test:*):void
+	{
+		if (test is Test)
+			addTest(test as Test);
+		else if (test is Class)
+			addTestClass(test as Class);
+		else if (test is TestList)
+			addTestList(test as TestList);
+	}
+
+	/**
 	 * Adds a test to this 
 	 * <code class="prettyprint">TestList</code>.
 	 * 
 	 * @param test The test to be added.
 	 */
-	public function addTest(test:Test):void
+	protected function addTest(test:Test):void
 	{
 		_testsAndTestLists.push(test);
 	}
@@ -158,7 +180,7 @@ public class TestList
 	 * 
 	 * @see TestList#staticTestListFunctionName
 	 */
-	public function addTestClass(testClass:Class):void
+	protected function addTestClass(testClass:Class):void
 	{
 		if (testClass != null)
 		{
@@ -212,7 +234,7 @@ public class TestList
 	 * <code class="prettyprint">null</code>.
 	 * 
 	 */
-	public function addTestList(testList:TestList):void
+	protected function addTestList(testList:TestList):void
 	{
 		if (testList != null)
 		{
