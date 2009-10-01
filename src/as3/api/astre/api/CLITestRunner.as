@@ -23,7 +23,6 @@ package astre.api
 {
 	import astre.core.ITestListener;
 	import astre.core.ITestRunner;
-	import astre.core.manipulation.runRequestRules.TestDescriptionSortRule;
 	import astre.core.RunConfiguration;
 
 /**
@@ -32,31 +31,31 @@ package astre.api
  * 
  * @author lunar
  */
-public class TextRunner 
+public class CLITestRunner 
 {
 
 	/**
 	 * Creates a test runner and runs the specified tests.
 	 * The test runner class used is 
 	 * <code class="prettyprint">astre.runner.TestRunner</code>.
-	 * A <code class="prettyprint">ResultPrinter</code> is automatically 
+	 * A <code class="prettyprint">CLIPrinter</code> is automatically 
 	 * attached.
 	 * 
 	 * @param tests The object containing the tests to run. 
 	 * The object to provide can be the same than the one of 
 	 * the <code class="prettyprint">RunRequest#create()</code> method.
-	 * @param listener a listener who will listener the test execution
 	 * @param env Environment vars to provide to the test runner.
 	 * @param runConfiguration A configuration to provide to the test runner.
+	 * @param listener a listener who will listener the test execution
 	 * @return The newly created test runner.
 	 * 
 	 */
-	public static function run(tests:Object, listener:ITestListener = null, env:TestEnv = null, runConfiguration:RunConfiguration = null):ITestRunner 
+	public static function run(tests:Object, env:TestEnv = null, runConfiguration:RunConfiguration = null, listener:ITestListener = null):ITestRunner 
 	{
 		var runner:ITestRunner = new TestRunner(env, runConfiguration);
 		
-		var testResultPrinter:ITestListener = new ResultPrinter();
-		testResultPrinter.registerToNotifier(runner.progressNotifier);
+		var testCLIPrinter:ITestListener = new CLIPrinter();
+		testCLIPrinter.registerToNotifier(runner.progressNotifier);
 		
 		if (listener != null)
 		{

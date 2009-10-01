@@ -28,7 +28,7 @@ package astre.api
 	import flash.utils.getQualifiedClassName;
 
 /**
- * A <code class="prettyprint">ResultPrinter</code> is a 
+ * A <code class="prettyprint">CLIPrinter</code> is a 
  * <code class="prettyprint">ITestListener</code> that 
  * logs test results as long as they are incoming, as well as 
  * printing a header information and a footer summary for 
@@ -37,7 +37,7 @@ package astre.api
  * @author lunar
  * 
  */
-public class ResultPrinter extends AbstractTestListener
+public class CLIPrinter extends AbstractTestListener
 {
 	
 	//------------------------------
@@ -121,7 +121,7 @@ public class ResultPrinter extends AbstractTestListener
 	 * if the result of tests that were ignored should be printed.
 	 * @param loggerFunction
 	 */
-	public function ResultPrinter(
+	public function CLIPrinter(
 									showWholeStackTraces:Boolean = false, 
 									showTesterMessages:Boolean = true, 
 									showPassedTestResults:Boolean = false, 
