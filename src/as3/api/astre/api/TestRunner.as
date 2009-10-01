@@ -381,7 +381,7 @@ public class TestRunner extends AbstractTestListener implements ITestRunner
 		// we delay the next test process, to avoid stack overflows
 		if (!isATestCurrentlyBeingRun)
 		{
-			setTimeout(runNextTest, 5);
+			setTimeout(runNextTest, 1);
 		}
 	}
 	

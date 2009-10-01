@@ -55,7 +55,7 @@ public class TextRunner
 	{
 		var runner:ITestRunner = new TestRunner(env, runConfiguration);
 		
-		var testResultPrinter:ITestListener = new ResultPrinter(true, true, true, true);
+		var testResultPrinter:ITestListener = new ResultPrinter();
 		testResultPrinter.registerToNotifier(runner.progressNotifier);
 		
 		if (listener != null)

@@ -103,7 +103,7 @@ public class RunConfiguration
 	 * of Flash Player (not in a browser) 
 	 * or in the AIR Runtime.
 	 */
-	public var exitOnFinish:Boolean = false;
+	public var exitOnFinish:Boolean = true;
 	
 	
 }
