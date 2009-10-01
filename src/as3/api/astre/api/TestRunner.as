@@ -146,7 +146,7 @@ public class TestRunner extends AbstractTestListener implements ITestRunner
 	 */
 	public function get testResult():TestResult
 	{
-		return _testResult.clone();
+		return _testResult;
 	}
 	
 	/**
@@ -432,7 +432,7 @@ public class TestRunner extends AbstractTestListener implements ITestRunner
 				try
 				{
 					var NativeApp:Class = getDefinitionByName("flash.desktop.NativeApplication") as Class;
-					NativeApp.nativeApplication.exit(0);
+					NativeApp.nativeApplication.exit(testResult.filterResults(TestResult.ERRORS | TestResult.FAILURES).numResults);
 				} catch (e:ReferenceError)
 				{
 					// could not get NativeApplication class :  ignore

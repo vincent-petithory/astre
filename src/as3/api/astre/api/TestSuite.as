@@ -123,12 +123,12 @@ public class TestSuite
 	 */
 	public function add(test:*):void
 	{
-		if (test is Test)
-			addTest(test as Test);
+		if (test is TestSuite)
+			addTestSuite(test as TestSuite);
 		else if (test is Class)
 			addTestClass(test as Class);
-		else if (test is TestSuite)
-			addTestSuite(test as TestSuite);
+		else if (test is Test)
+			addTest(test as Test);
 		else
 		{
 			throw new ArgumentError(
