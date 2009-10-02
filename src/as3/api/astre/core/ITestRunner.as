@@ -21,7 +21,6 @@
 
 package astre.core 
 {
-	import astre.api.TestEnv;
 	import astre.api.TestResult;
 	import astre.api.RunRequest;
 
@@ -135,17 +134,6 @@ public interface ITestRunner
 	 * runner is running. Otherwise <code class="prettyprint">false</code>.
 	 */
 	function get isRunning():Boolean;
-	
-	/**
-	 * The resources shared by all tests to be run by this 
-	 * <code class="prettyprint">ITestRunner</code>.
-	 */
-	function get testEnv():TestEnv;
-	
-	/**
-	 * @private
-	 */
-	function set testEnv(value:TestEnv):void;
 	
 }
 	

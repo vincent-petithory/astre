@@ -45,15 +45,14 @@ public final class ThunderBoltTestRunner
 	 * @param tests The object containing the tests to run. 
 	 * The object to provide can be the same than the one of 
 	 * the <code class="prettyprint">RunRequest#create()</code> method.
-	 * @param env Environment vars to provide to the test runner.
 	 * @param runConfiguration A configuration to provide to the test runner.
 	 * @param listener a listener who will listener the test execution
 	 * @return The newly created test runner.
 	 * 
 	 */
-	public static function run(tests:Object, env:TestEnv = null, runConfiguration:RunConfiguration = null, listener:ITestListener = null):ITestRunner 
+	public static function run(tests:Object, runConfiguration:RunConfiguration = null, listener:ITestListener = null):ITestRunner 
 	{
-		var runner:ITestRunner = new TestRunner(env, runConfiguration);
+		var runner:ITestRunner = new TestRunner(runConfiguration);
 		
 		var testThunderBoltPrinter:ITestListener = new ThunderBoltPrinter();
 		testThunderBoltPrinter.registerToNotifier(runner.progressNotifier);

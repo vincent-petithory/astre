@@ -171,47 +171,6 @@ public class Test extends Assertion
 	 */
 	protected var helpDispatcher:IEventDispatcher;
 	
-	/**
-	 * The resource object shared by all the tests belonging to the 
-	 * same <code class="prettyprint">ITestRunner</code>.
-	 * 
-	 * <p>You may use this when data may be shared by a large amount of tests 
-	 * and reloaded or recreating this data for each test would be too 
-	 * time-consuming, which is unacceptable in an extreme 
-	 * programming context.</p>
-	 * 
-	 * <p>Be careful because abusing of this property would break the rule of 
-	 * unit tests stating that all tests should run separately without 
-	 * influencing each other. So, you must take care that a test does 
-	 * not modify an object contained in this shared resources, otherwise, 
-	 * it may skew the whole test results.</p>
-	 * 
-	 * @example The following code shows how to add a child to the stage in 
-	 * a test method scope :
-	 * <pre class="prettyprint">
-	 * 
-	 * // code in your root class
-	 * var runner:ITestRunner = new TestRunner({stage: this.stage});
-	 * 
-	 * // .......
-	 * 
-	 * // code in your test class
-	 * public function stageNumChildrenTest():void
-	 * {
-	 * 		var stage:Stage = this.testEnv.stage;
-	 * 		var numChildren:uint = stage.numChildren;
-	 * 		stage.addChild(new Shape());
-	 * 		assertEquals(numChildren+1, stage.numChildren);
-	 * }
-	 * 
-	 * </pre>
-	 * 
-	 */
-	protected function get testEnv():TestEnv
-	{
-		return this.Astre::runner.testEnv;
-	}
-	
 	//------------------------------
 	//
 	// Constructor

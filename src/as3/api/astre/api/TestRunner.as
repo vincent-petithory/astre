@@ -50,18 +50,14 @@ package astre.api
  * <code class="prettyprint">ITestSuiteener</code>.</p>
  * 
  * @example This code shows how to create and run a 
- * <code class="prettyprint">TestRunner</code>. As an 
- * example, this <code class="prettyprint">TestRunner</code> 
- * provides access to the <code class="prettyprint">Stage</code> 
- * to all tests about to be run, using the 
- * <code class="prettyprint">testEnv</code> property.
+ * <code class="prettyprint">TestRunner</code>. 
  * 
  * <pre class="prettyprint">
  * public class TestRunnerExample extends Sprite
  * {
  * 		public function TestRunnerExample()
  * 		{
- * 			var runner:ITestRunner = new TestRunner({stage: this.stage});
+ * 			var runner:ITestRunner = new TestRunner();
  * 			runner.runWith(RunRequest.create(myTestAggregatorClass);
  * 		}
  * 	
@@ -185,28 +181,6 @@ public class TestRunner extends AbstractTestListener implements ITestRunner
 	}
 	
 	/**
-	 * The resources shared by all tests to be run by this 
-	 * <code class="prettyprint">TestRunner</code>.
-	 */
-	protected var _testEnv:TestEnv;
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function get testEnv():TestEnv
-	{
-		return _testEnv;
-	}
-	
-	/**
-	 * @private
-	 */
-	public function set testEnv(value:TestEnv):void
-	{
-		this._testEnv = _testEnv;
-	}
-	
-	/**
 	 * @private
 	 */
 	private var isATestCurrentlyBeingRun:Boolean = false;
@@ -232,27 +206,15 @@ public class TestRunner extends AbstractTestListener implements ITestRunner
 	 * This <code class="prettyprint">TestRunner</code> is 
 	 * registered with a priority of <code class="prettyprint">255</code>.
 	 * 
-	 * @param testEnv The resources that will be shared by all 
-	 * tests to be run.
 	 * @param runConfiguration The configuration of this 
 	 * <code class="prettyprint">TestRunner</code>.
 	 */
 	public function TestRunner(
-			testEnv:TestEnv = null, 
 			runConfiguration:RunConfiguration = null
 		) 
 	{
 		super();
 		_progressNotifier = new ProgressNotifier();
-		
-		if (testEnv != null)
-		{
-			this._testEnv= testEnv;
-		}
-		else
-		{
-			this._testEnv = new TestEnv();
-		}
 		
 		if (runConfiguration != null)
 		{
