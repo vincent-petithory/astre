@@ -31,7 +31,7 @@ package astre.api
  * 
  * @author lunar
  */
-public class CLITestRunner 
+public final class CLITestRunner 
 {
 
 	/**
