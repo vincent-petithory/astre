@@ -153,8 +153,32 @@ public class Test extends Assertion
 	/**
 	 * @private
 	 */
-	Astre var runMethodName:String;
+	private var _name:String;
 	
+    /**
+     * The name of the test method to be run.
+     */
+    public function get name():String
+    {
+        return this._name;
+    }
+    
+    /**
+     * @private
+     */
+    public function set name(value:String):void
+    {
+        if (this.hasOwnProperty(name) && this[name] is Function)
+		{
+			this.name = name;
+		}
+		else
+		{
+			throw new TypeError("The method name '"+name+"' does not "+ 
+			"exist for a "+this.description.className+" class test.");
+		}
+    }
+    
 	/**
 	 * @private
 	 */
@@ -186,20 +210,15 @@ public class Test extends Assertion
 	 * specified method name does not 
 	 * exist in this <code class="prettyprint">Test</code> class.
 	 */
-	public function Test(name:String) 
+	public function Test(name:String = null) 
 	{
 		super();
 		helpDispatcher = new EventDispatcher();
 		this.Astre::asyncsHandler = new AsyncHandler();
-		if (this.hasOwnProperty(name) && this[name] is Function)
-		{
-			this.Astre::runMethodName = name;
-		}
-		else
-		{
-			throw new TypeError("The method name '"+name+"' does not "+ 
-			"exist for a "+this.description.className+" class test.");
-		}
+        if (name != null && name != "")
+        {
+            this.name = name;
+        }
 	}
 	
 	//------------------------------
@@ -257,8 +276,8 @@ public class Test extends Assertion
 				this.Astre::runner.runConfiguration.testProcessorClass(this);
 		testProcessor.run();
 	}
-	
-	/**
+    
+    /**
 	 * Returns <code class="prettyprint">true</code> if this 
 	 * <code class="prettyprint">Test</code> should be marked as ignored.
 	 * Otherwise, <code class="prettyprint">false</code>.
@@ -339,7 +358,7 @@ public class Test extends Assertion
 	 * 
 	 *   override public function clone():Test
 	 *   {
-	 *      return new InternalTestClass(this.Astre::runMethodName);
+	 *      return new InternalTestClass(this.name);
 	 *   }
 	 * 
 	 * }
@@ -367,7 +386,12 @@ public class Test extends Assertion
 						"Non-public test classes cannot be cloned."
 					);
 		}
-		return new thisClass(this.Astre::runMethodName);
+        var t:Test = new thisClass() as Test;
+        if (t == null)
+            throw new ArgumentError("The class to clone is not a Test subclass.");
+        
+        t.name = this.name;
+        return t;
 	}
 	
 	/**

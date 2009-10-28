@@ -71,7 +71,7 @@ public class MainMethodProcess extends SyncMethodProcess
 	 */
 	override protected function runSyncProcess():void 
 	{
-		(test[test.Astre::runMethodName] as Function).apply(test);
+		(test[test.name] as Function).apply(test);
 	}
 	
 }

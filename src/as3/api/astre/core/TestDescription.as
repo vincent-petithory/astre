@@ -95,7 +95,7 @@ public class TestDescription
 	public function TestDescription(test:Test) 
 	{
 		super();
-		this._method = test.Astre::runMethodName;
+		this._method = test.name;
 		this._packageName = Reflection.getPackage(test);
 		this._className = Reflection.getClassName(test);
 	}
