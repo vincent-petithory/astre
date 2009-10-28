@@ -187,7 +187,7 @@ public class CLIPrinter extends AbstractTestListener
 		
 		print("---- END PROCESSING ----");
 		print("> Ended on "+formatMonthOrDay(d.month)+"/"+
-			formatMonthOrDay(d.day)+"/"+d.fullYear+" "+d.toTimeString());
+			formatMonthOrDay(d.date)+"/"+d.fullYear+" "+d.toTimeString());
 		print("> Tests run : "+runner.numTestsRun+"/"+runner.numTests);
 		print("> TestResult detail :");
 		print("\tPassed : "+numPassed);
