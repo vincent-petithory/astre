@@ -21,8 +21,10 @@
 
 package astre.core.processor.process 
 {
-	import astre.core.Astre;
+    import astre.core.TestError;
 	import astre.core.processor.process.ETestProcessPhase;
+	import astre.api.focus;
+	import astre.api.ignore;
 	import astre.api.Test;
 
 /**
@@ -71,7 +73,20 @@ public class MainMethodProcess extends SyncMethodProcess
 	 */
 	override protected function runSyncProcess():void 
 	{
-		(test[test.name] as Function).apply(test);
+        use namespace ignore;
+        use namespace focus;
+        try 
+        {
+            var testMethod:Function = test[test.name];
+        } catch (te:TypeError)
+        {
+            throw new TestError("public, ignore and focus namespaces"+
+                " are excluding each other. You cannot declare a "+
+                "function with the same in two of those namespaces.", 
+            te
+            );
+        }
+        test[test.name].apply(test);
 	}
 	
 }

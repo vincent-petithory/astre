@@ -243,7 +243,7 @@ public class Test extends Assertion
 	 * @see #tearDown()
 	 * 
 	 */
-	public function setUp():void {}
+	prototype.setUp = function():void {}
 	
 	/**
 	 * The <code class="prettyprint">tearDown()</code> method is 
@@ -260,7 +260,7 @@ public class Test extends Assertion
 	 * @see #setUp()
 	 * 
 	 */
-	public function tearDown():void {}
+	prototype.tearDown = function():void {}
 	
 	/**
 	 * @private

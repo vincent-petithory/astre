@@ -70,7 +70,7 @@ public class TearDownProcess extends SyncMethodProcess
 	 */
 	override protected function runSyncProcess():void 
 	{
-		test.tearDown();
+		test["tearDown"]();
 	}
 	
 }

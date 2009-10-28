@@ -70,7 +70,7 @@ public class SetUpProcess extends SyncMethodProcess
 	 */
 	override protected function runSyncProcess():void 
 	{
-		test.setUp();
+		test["setUp"]();
 	}
 	
 }

@@ -21,6 +21,8 @@
 
 package astre.core.processor 
 {
+	import astre.api.focus;
+	import astre.api.ignore;
 	import astre.api.Test;
 	import astre.api.EResultType;
 	import astre.async.AsyncData;
@@ -35,7 +37,9 @@ package astre.core.processor
 	import astre.core.processor.process.SetUpProcess;
 	import astre.core.processor.process.TearDownProcess;
 	import astre.core.processor.process.TestProcessEvent;
-	import flash.events.Event;
+	
+    import flash.events.Event;
+    import flash.utils.describeType;
 
 /**
  * A <code class="prettyprint">TestProcessor</code> is the default 
@@ -360,18 +364,51 @@ public class TestProcessor extends AbstractTestProcessor
 	override public function run():void 
 	{
 		_progressNotifier.notifyTestStarted(this._test);
-		if (test.isIgnored())
-		{
-			this.result = new AtomicResult(EResultType.IGNORED, _test.description);
-			notifyAllProcessesEnd();
-		}
-		else
-		{
-			this.execute(new TestProcessorInstruction(
-				TestProcessorInstructionType.PROCESS_SET_UP
-				)
-			);
-		}
+        var isIgnored:Boolean = test.isIgnored() || 
+            describeType(
+                this._test
+            )..method.(
+                @name == this._test.name && 
+                @uri == "http://www.lunar-dev.net/astre/ignore"
+            ).length() > 0;
+        
+        var focusedTests:XMLList = describeType(
+            this._test
+        )..method.(
+            @uri == "http://www.lunar-dev.net/astre/focus"
+        );
+        
+        if (focusedTests.length() > 0)
+        {
+            if (focusedTests.(@name == this._test.name).length() > 0)
+            {
+                // that's a focused test, so run it, whether it is marked as ignored or not.
+                this.execute(new TestProcessorInstruction(
+                    TestProcessorInstructionType.PROCESS_SET_UP
+                    )
+                );
+            }
+            else
+            {
+                this.result = new AtomicResult(EResultType.IGNORED, _test.description);
+                notifyAllProcessesEnd();
+            }
+        }
+        else
+        {
+            if (isIgnored)
+            {
+                this.result = new AtomicResult(EResultType.IGNORED, _test.description);
+                notifyAllProcessesEnd();
+            }
+            else
+            {
+                this.execute(new TestProcessorInstruction(
+                    TestProcessorInstructionType.PROCESS_SET_UP
+                    )
+                );
+            }
+        }
 	}
 	
 }
