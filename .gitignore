@@ -1,7 +1,9 @@
-asdoc
-archives
-docs
-graphisme
 lib
-LicenseExhibit.txt
-samples
+man
+**/*.cache
+**/*.swc
+**/*.swf
+samples/*.xml
+unittest/*.xml
+!**/*-tmp.xml
+docs

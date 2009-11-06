@@ -24,14 +24,7 @@ public class AstreRunner extends Sprite
 	{
 		super();
 		var obj:Object = AllTopLevelTests;
-		runner = TextRunner.run(obj);
-		//runner.terminate();
-		runner.progressNotifier.addEventListener(RunEvent.RUN_END, onRunEnd);
-	}
-	
-	private function onRunEnd(event:RunEvent):void 
-	{
-		trace(event.runner.results.toXML());
+		CLITestRunner.run(new AllTopLevelTests());
 	}
 	
 }
