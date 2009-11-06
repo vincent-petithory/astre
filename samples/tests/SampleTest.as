@@ -1,28 +1,27 @@
-package 
+package tests 
 {
     import astre.api.*;
     
-    public class SimpleTest extends Test 
+    public class SampleTest extends Test 
     {
         public var value1:int;
         
         public var value2:int;
         
-        public function SimpleTest(name:String)
+        public function SampleTest()
         {
-            super(name);
+            super();
         }
         
-        override public function setUp():void
+        public function setUp():void
         {
             value1 = 2;
             value2 = 3;
         }
         
-        public function testAdd():void
+        public function testAddFail():void
         {
             var result:int = value1 + value2 + 1; //force failure with +1
-            //var result:int = value1 + value2 ;
             assertTrue(result == 5, "result is not 5");
         }
         
@@ -38,14 +37,12 @@ package
             var result:int = 8 / zero;
             
             //forced failure
-            assertEquals(8, result);
-            
-            //passing test
-            //assertEquals( 0, result );
+            //assertEquals(8, result);
         }
         
-        public function testEquals():void
+        ignore function testEquals():void
         {
+            // should fail but is ignored, so it's ok.
             assertEquals(12, 12);
             
             var twelve:String = (12).toString(16);
@@ -64,18 +61,18 @@ package
         {
             var obj1:Object = {a:1, b:2, c:3};
             var obj2:Object = {a:1, b:2, c:4};
-            //var obj3:Object = obj1;
+            var obj3:Object = obj1;
             
             //forced failure
-            assertEquals(obj1, obj2);
+            //assertEquals(obj1, obj2);
             
             //passing test
-            //assertEquals( obj1, obj3 );
+            assertEquals( obj1, obj3 );
         }
         
         public function testErrorThrow():void
         {
-            throw new Error("this is a basic error");
+            //throw new Error("this is a basic error");
         }
     }
 }

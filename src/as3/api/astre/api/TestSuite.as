@@ -121,14 +121,14 @@ public class TestSuite
      * </ul>
      * 
 	 */
-	public function add(test:*):void
+	public function addTest(test:*):void
 	{
 		if (test is TestSuite)
 			addTestSuite(test as TestSuite);
 		else if (test is Class)
 			addTestClass(test as Class);
 		else if (test is Test)
-			addTest(test as Test);
+			addTestInstance(test as Test);
 		else
 		{
 			throw new ArgumentError(
@@ -147,7 +147,7 @@ public class TestSuite
 	 * 
 	 * @param test The test to be added.
 	 */
-	protected function addTest(test:Test):void
+	protected function addTestInstance(test:Test):void
 	{
 		_testsAndTestSuites.push(test);
 	}
@@ -211,9 +211,12 @@ public class TestSuite
 				var methods:Array = Reflection.getMethods(testClass);
 				// reverse for alphabetical order by default
 				methods = methods.filter(testMethodFilter).reverse();
+				trace(methods);
 				for each (var method:String in methods)
 				{
-					testSuite.addTest(new testClass(method) as Test);
+				    var test:Test = new testClass() as Test;
+				    test.name = method;
+					testSuite.addTestInstance(test);
 				}
 				this.addTestSuite(testSuite);
 			}
@@ -227,7 +230,7 @@ public class TestSuite
 				throw new ArgumentError(
 					"The specified class "+testClass+" does not provide a "+
 					"static method named "+TestSuite.staticTestSuiteFunctionName+
-					" "+"that returns a astre.core.TestSuite object "+
+					" that returns a astre.core.TestSuite object "+
 					"or it is neither a astre.core.Test "+
 					"nor astre.core.TestSuite subclass.");
 			}

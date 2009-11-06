@@ -21,7 +21,6 @@
 
 package astre.core.processor 
 {
-	import astre.api.focus;
 	import astre.api.ignore;
 	import astre.api.Test;
 	import astre.api.EResultType;
@@ -364,38 +363,18 @@ public class TestProcessor extends AbstractTestProcessor
 	override public function run():void 
 	{
 		_progressNotifier.notifyTestStarted(this._test);
-        var isIgnored:Boolean = test.isIgnored() || 
-            describeType(
-                this._test
-            )..method.(
-                @name == this._test.name && 
-                @uri == "http://www.lunar-dev.net/astre/ignore"
-            ).length() > 0;
+        var isIgnored:Boolean = test.isIgnored();
+            
         
-        var focusedTests:XMLList = describeType(
-            this._test
-        )..method.(
-            @uri == "http://www.lunar-dev.net/astre/focus"
-        );
-        
-        if (focusedTests.length() > 0)
+        if (isIgnored)
         {
-            if (focusedTests.(@name == this._test.name).length() > 0)
-            {
-                // that's a focused test, so run it, whether it is marked as ignored or not.
-                this.execute(new TestProcessorInstruction(
-                    TestProcessorInstructionType.PROCESS_SET_UP
-                    )
-                );
-            }
-            else
-            {
-                this.result = new AtomicResult(EResultType.IGNORED, _test.description);
-                notifyAllProcessesEnd();
-            }
+            this.result = new AtomicResult(EResultType.IGNORED, _test.description);
+            notifyAllProcessesEnd();
         }
         else
         {
+            var dt:XMLList = describeType(this._test)..method.(@name == this._test.name);
+            isIgnored = dt.attribute("uri") == "http://www.lunar-dev.net/astre/ignore";
             if (isIgnored)
             {
                 this.result = new AtomicResult(EResultType.IGNORED, _test.description);

@@ -1,8 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <project name="Astre" default="all" basedir=".">
 	
-	<!-- BEGIN of user-dependant properties -->
-	
 	<!-- The project name (canonical form) -->
 	<property name="project.name" value="astre" />
 	<!-- The project major version -->
@@ -15,15 +13,6 @@
 	<property name="player" value="10" />
 	<property name="air" value="false" />
 	
-	<!-- metadata -->
-	<property name="project.metadata.title" value="Astre ${project.version}" />
-	<property name="project.metadata.description" value="Astre ${project.version} - A Unit Testing Library" />
-	<property name="project.metadata.publisher" value="Vincent Petithory & contributors" />
-	<property name="project.metadata.creator" value="Vincent Petithory & contributors" />
-	<property name="project.metadata.language" value="EN" />
-	
-	<!-- END of user-dependant properties -->
-	
 	<!-- Properties -->
 
 	<property file="${basedir}/build.properties" />
@@ -32,6 +21,13 @@
 		file="${project.build.flexc.tasks}" 
 		classpath="${project.build.flexc.jar}" 
 	/>
+	
+	<!-- metadata -->
+	<property name="project.metadata.title" value="'Astre ${project.version}'" />
+	<property name="project.metadata.description" value="'Astre ${project.version} - A Unit Testing Library'" />
+	<property name="project.metadata.publisher" value="'Vincent Petithory &amp; contributors'" />
+	<property name="project.metadata.creator" value="'Vincent Petithory &amp; contributors'" />
+	<property name="project.metadata.language" value="EN" />
 	
 	<!-- Standard targets -->
 
@@ -65,6 +61,8 @@
     
     <target name="all">
     	<buildnumber file="${project.build.file}" />
+    	<mkdir dir="${project.deps}" />
+    	<mkdir dir="${project.lib}" />
 		<compc air="${air}" failonerror="true">
 		    <arg value="-define=CFG::debug,${debug}" />
 		    <arg value="-define=CFG::air,${air}" />
@@ -86,6 +84,7 @@
     </target>
     
     <target name="html">
+        <mkdir dir="${project.man}" />
     	<asdoc air="${air}" failonerror="true">
 		    <arg value="-define=CFG::debug,${debug}" />
 		    <arg value="-define=CFG::air,${air}" />

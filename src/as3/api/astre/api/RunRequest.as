@@ -127,7 +127,7 @@ public class RunRequest
 		var list:TestSuite = new TestSuite();
 		for each (var obj:Object in tests)
 		{
-			list.add(obj);
+			list.addTest(obj);
 		}
 		this._tests = list.getTests();
 	}

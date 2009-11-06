@@ -124,7 +124,8 @@ public class Test extends Assertion
 	 * The public instance methods that are defined by the 
 	 * <code class="prettyprint">Test</code> class.
 	 */
-	public static const NOT_TEST_METHODS:Array = Reflection.getMethods(Test);
+	public static const NOT_TEST_METHODS:Array = Reflection.getMethods(Test)
+	                                            .concat("setUp","tearDown");
 	
 	//------------------------------
 	//
@@ -168,15 +169,7 @@ public class Test extends Assertion
      */
     public function set name(value:String):void
     {
-        if (this.hasOwnProperty(name) && this[name] is Function)
-		{
-			this.name = name;
-		}
-		else
-		{
-			throw new TypeError("The method name '"+name+"' does not "+ 
-			"exist in "+this.description.className+".");
-		}
+		this._name = value;
     }
     
 	/**

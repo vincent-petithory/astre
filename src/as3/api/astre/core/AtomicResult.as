@@ -315,7 +315,10 @@ public class AtomicResult
 	{
 		if (
 			item.indexOf("astre.") != -1 || 
-			item.indexOf("flash.events::EventDispatcher") != -1
+			item.indexOf("flash.events::EventDispatcher") != -1 || 
+			item.indexOf("SetIntervalTimer") != -1 || 
+			item.indexOf("http://adobe.com/AS3/2006/builtin::apply()") != -1 || 
+			item.indexOf("flash.utils::Timer") != -1 
 		)
 		{
 			return false;

@@ -23,7 +23,6 @@ package astre.core.processor.process
 {
     import astre.core.TestError;
 	import astre.core.processor.process.ETestProcessPhase;
-	import astre.api.focus;
 	import astre.api.ignore;
 	import astre.api.Test;
 
@@ -74,15 +73,21 @@ public class MainMethodProcess extends SyncMethodProcess
 	override protected function runSyncProcess():void 
 	{
         use namespace ignore;
-        use namespace focus;
         try 
         {
             var testMethod:Function = test[test.name];
-        } catch (te:TypeError)
+        } catch (re:ReferenceError)
         {
-            throw new TestError("public, ignore and focus namespaces"+
-                " are excluding each other. You cannot declare a "+
-                "function with the same in two of those namespaces.", 
+            throw new TestError("There is no test name specified "+
+                "for this test or the method does not exist.", 
+            re
+            );
+        }
+        catch (te:TypeError)
+        {
+            throw new TestError("The error for the following reason : "+
+                "The test method to run does not exist or the method is "+
+                "declared in both ignore and public namespaces", 
             te
             );
         }
