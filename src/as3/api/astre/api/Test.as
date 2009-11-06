@@ -175,7 +175,7 @@ public class Test extends Assertion
 		else
 		{
 			throw new TypeError("The method name '"+name+"' does not "+ 
-			"exist for a "+this.description.className+" class test.");
+			"exist in "+this.description.className+".");
 		}
     }
     
